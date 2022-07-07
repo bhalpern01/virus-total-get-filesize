@@ -1,0 +1,15 @@
+{
+    "data": {
+        "id": 98,
+        "attackName": "Drop malware on target by md5",
+        "modifiedDate": "2021-01-01T18:25:43.511Z",
+        "malwareFiles": [
+            {
+                "md5": "76e94e525a2d1a350ff989d532239976"
+            },
+            {
+                "md5": "97922f74310c628557658c1e44278713"
+            }
+        ]
+    }
+}
