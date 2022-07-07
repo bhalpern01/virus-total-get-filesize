@@ -2,8 +2,8 @@ class AttackValidator {
     constructor() {
 
         // if this were in typescript, these would be interfaces
-        this.attackTopLevelFieldsAndTypes = { data: "object" };
-        this.attackDataFieldsAndTypes = {
+        this.attackTopLevelRequiredFieldsAndTypes = { data: "object" };
+        this.attackDataRequiredFieldsAndTypes = {
             id: "number",
             attackName: "string",
             modifiedDate: "string",
@@ -19,8 +19,8 @@ class AttackValidator {
      * @returns boolean
      */
     validateAttack(attack) {
-        return this.validateObjectAttributes(attack, this.attackTopLevelFieldsAndTypes) &&
-            this.validateObjectAttributes(attack.data, this.attackDataFieldsAndTypes) &&
+        return this.validateObjectAttributes(attack, this.attackTopLevelRequiredFieldsAndTypes) &&
+            this.validateObjectAttributes(attack.data, this.attackDataRequiredFieldsAndTypes) &&
             this.validateObjectArrayAttributes(attack.data.malwareFiles, this.attackFileRequiredFieldsAndTypes);
     }
 
@@ -37,12 +37,11 @@ class AttackValidator {
         // try/catch for debugging
         try {
 
-            // does it have the attribute, and is it the correct type?
-            return Object.keys(object).length == Object.keys(interfaceTemplate).length &&
-                Object.keys(object).every((att) => {
-                    return interfaceTemplate[att] &&
-                        this.validateAttributeType(object[att], interfaceTemplate[att]);
-                })
+            // does it have the required attributes, and are they the correct types?
+            return Object.keys(interfaceTemplate).every((att) => {
+                return object[att] &&
+                    this.validateAttributeType(object[att], interfaceTemplate[att]);
+            })
         } catch (e) {
 
             // easy to find a configuration problem

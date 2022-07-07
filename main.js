@@ -19,7 +19,7 @@ class Main {
         // enrich the Attack object with "size"
         const attack = new Attack(input);
         console.log(`Attack object: ${JSON.stringify(attack)}`);
-        const fileSizes = await VirusTotalFileSizeService.getFileSizes(attack.getAttackData().data.malwareFiles);
+        const fileSizes = await VirusTotalFileSizeService.getFileSizes(attack.getAttackFiles());
         fileSizes.forEach(fileSize => {
             attack.setFileSize(fileSize.md5, fileSize.size);
         })
@@ -27,6 +27,8 @@ class Main {
 
         // insert into DB
         await MongoService.insertAttack(attack);
+
+        // End program
         console.log('Complete!');
     }
 }
